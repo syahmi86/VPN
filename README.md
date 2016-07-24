@@ -5,7 +5,7 @@ Autoscript VPS created by Tony Simuncai
 
 # Centos 6.8 64-bit Webmin
 
-1. wget https://raw.githubusercontent.com/syahmi86/VPN/master/Centos-kvm.sh
+1. wget https://raw.githubusercontent.com/syahz86/VPN/master/Centos-kvm.sh
 
 kemudian paste nie dan tunggu sehingga selesai
 
@@ -15,7 +15,7 @@ kemudian paste nie dan tunggu sehingga selesai
 
 # Ubuntu 14 64-bit Unlimited Pritunl
 
-1. wget https://raw.githubusercontent.com/syahmi86/VPN/master/UnlimitedUbuntu.sh
+1. wget https://raw.githubusercontent.com/syahz86/VPN/master/UnlimitedUbuntu.sh
 
 kemudian paste nie dan tunggu sehingga selesai 
 
