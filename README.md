@@ -1,9 +1,9 @@
 # VPN
-# copy paste orang punya
+copy paste orang punya
 
 Autoscript VPS created by Tony Simuncai
 
-Centos 6.8 64-bit Webmin
+# Centos 6.8 64-bit Webmin
 
 1. wget https://raw.githubusercontent.com/syahmi86/VPN/master/Centos-kvm.sh
 
