@@ -20,3 +20,12 @@ kemudian paste nie dan tunggu sehingga selesai
 kemudian paste nie dan tunggu sehingga selesai 
 
 2. bash UnlimitedUbuntu.sh
+
+
+# Debian 8 64-bit Unlimited Pritunl
+
+1. wget https://raw.githubusercontent.com/syahz86/VPN/master/UnlimitedDebian8.sh
+
+kemudian paste nie dan tunggu sehingga selesai
+
+2. bash UnlimitedDebian8.sh
