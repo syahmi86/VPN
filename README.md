@@ -30,7 +30,7 @@ kemudian paste nie dan tunggu sehingga selesai
 
 2. bash UnlimitedDebian8.sh
 
-# Debian 8 64-bit Webmin
+# Debian 7 64-bit Webmin
 
 1. wget https://raw.githubusercontent.com/syahz86/VPN/master/Debian-kvm.sh
  
