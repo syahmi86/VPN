@@ -43,7 +43,7 @@
  
  bash Autokick-debian.sh
  
-# Disable MultiLogin SSH User
+# Disable MultiLogin SSH User CentOs
  
  wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-centos.sh
  
