@@ -35,7 +35,7 @@
 
  bash Debian-kvm.sh
  
- # Disable MultiLogin SSH User Debian/Ubuntu
+# Disable MultiLogin SSH User Debian/Ubuntu
  
  wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-debian.sh
  
@@ -43,7 +43,7 @@
  
  bash Autokick-debian.sh
  
- # Disable MultiLogin SSH User
+# Disable MultiLogin SSH User
  
  wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-centos.sh
  
