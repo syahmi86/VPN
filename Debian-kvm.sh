@@ -95,12 +95,6 @@ tar cf client.tar 1194-client.ovpn
 cp client.tar /home/vps/public_html/
 cd
 
-# install badvpn
-wget -O /usr/bin/badvpn-udpgw "https://github.com/syahz86/VPN/raw/master/conf/badvpn-udpgw64"
-sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
-chmod +x /usr/bin/badvpn-udpgw
-screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
-
 # setting port ssh
 sed -i '/Port 22/a Port 143' /etc/ssh/sshd_config
 sed -i 's/Port 22/Port  22/g' /etc/ssh/sshd_config
@@ -154,6 +148,19 @@ cd
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/status
 chmod +x status
 
+# Install Dos Deflate
+apt-get -y install dnsutils dsniff
+wget https://github.com/jgmdev/ddos-deflate/archive/master.zip
+unzip master.zip
+cd ddos-deflate-master
+./install.sh
+cd
+
+# Install SSH autokick
+cd
+wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-debian.sh
+bash Autokick-debian.sh
+
 # Restart Service
 chown -R www-data:www-data /home/vps/public_html
 service nginx start
@@ -173,7 +180,6 @@ echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.tar)"
 echo "OpenSSH  : 22, 143"
 echo "Dropbear : 109, 110, 443"
 echo "Squid3   : 8080 (limit to IP SSH)"
-echo "badvpn   : badvpn-udpgw port 7300"
 echo ""
 echo "----------"
 echo "Webmin   : http://$MYIP:10000/"
