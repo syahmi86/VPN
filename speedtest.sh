@@ -8,7 +8,7 @@ sudo chown root:root /usr/local/bin/speedtest-cli
 # info
 clear
 echo "Autoscript by Si Tony"
-echo -e "\e[33m test 1.0 Sila pilih command dibawah"
+echo -e "\e[33m Sila pilih command dibawah"
 echo "untuk check speedtest server(Mbps) paste command ini: speedtest-cli"
 echo "untuk check speedtest server(in bytes) paste command ini: speedtest-cli --bytess"
 echo "untuk share gambar speedtest server(Mbps) paste comamnd ini: speedtest-cli --share"
