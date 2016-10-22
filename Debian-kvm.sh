@@ -81,17 +81,23 @@ wget -O /etc/iptables.up.rules "https://raw.githubusercontent.com/syahz86/VPN/ma
 sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.local
 MYIP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | grep -v '192.168`;
 MYIP2="s/xxxxxxxxx/$MYIP/g";
+sed -i 's/port 1194/port 6500/g' /etc/openvpn/1194.conf
+sed -i 's/proto tcp/proto udp/g' /etc/openvpn/1194.conf
 sed -i $MYIP2 /etc/iptables.up.rules;
 iptables-restore < /etc/iptables.up.rules
 service openvpn restart
-
 
 # configure openvpn client config
 cd /etc/openvpn/
 wget -O /etc/openvpn/1194-client.ovpn "https://raw.githubusercontent.com/syahz86/VPN/master/conf/1194-client.conf"
 sed -i $MYIP2 /etc/openvpn/1194-client.ovpn;
-PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
-tar cf client.tar 1194-client.ovpn
+sed -i 's/proto tcp/proto udp/g' /etc/openvpn/1194-client.ovpn
+sed -i 's/1194/6500/g' /etc/openvpn/1194-client.ovpn
+NAME=`uname -n`.`awk '/^domain/ {print $2}' /etc/resolv.conf`;
+mv /etc/openvpn/1194-client.ovpn /etc/openvpn/$NAME.ovpn
+useradd -M -s /bin/false test1
+echo "test1:test1" | chpasswd
+tar cf client.tar $NAME.ovpn
 cp client.tar /home/vps/public_html/
 cd
 
@@ -135,10 +141,10 @@ service squid3 restart
 
 # install webmin
 cd
-wget "http://prdownloads.sourceforge.net/webadmin/webmin_1.801_all.deb"
-dpkg --install webmin_1.801_all.deb;
+wget "http://prdownloads.sourceforge.net/webadmin/webmin_1.820_all.deb"
+dpkg --install webmin_1.820_all.deb;
 apt-get -y -f install;
-rm /root/webmin_1.801_all.deb
+rm /root/webmin_1.820_all.deb
 sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
 service webmin restart
 service vnstat restart
@@ -160,6 +166,12 @@ cd
 cd
 wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-debian.sh
 bash Autokick-debian.sh
+
+# Install Menu for OpenVPN
+cd
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/menu
+mv ./menu /usr/local/bin/menu
+chmod +x /usr/local/bin/menu
 
 # Restart Service
 chown -R www-data:www-data /home/vps/public_html
