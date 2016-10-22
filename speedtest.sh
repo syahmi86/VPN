@@ -1,4 +1,4 @@
-# Install Menu for OpenVPN
+# Install speedtest
 cd
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/speedtest_cli.py
 chmod a+rx speedtest_cli.py
