@@ -58,6 +58,7 @@
  kemudian paste nie dan tunggu sehingga selesai
  
  bash speedtest.sh
+ 
 *untuk check speedtest server(Mbps) paste command ini: speedtest-cli
 *untuk check speedtest server(in bytes) paste command ini: speedtest-cli --bytes
 *unutk share gambar speedtest server(Mbps) paste comamnd ini: speedtest-cli --share
