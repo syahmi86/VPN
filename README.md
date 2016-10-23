@@ -59,7 +59,13 @@
  
  bash speedtest.sh
  
+# Custom Debian 7 64-bit Webmin
 
+ wget https://raw.githubusercontent.com/syahz86/VPN/master/CustomDebian-kvm.sh
+
+ kemudian paste nie dan tunggu sehingga selesai
+
+ bash CustomDebian-kvm.sh
 
  
  
