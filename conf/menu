@@ -105,6 +105,11 @@ do
 			used_data
 			break
 			;;
+		"Monitor Login Dropbear")
+		        clear
+	                user-login
+		        break
+                        ;;
         "Quit")
             break
             ;;
