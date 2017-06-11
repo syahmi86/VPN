@@ -85,6 +85,19 @@ cd
 apt-get -y install fail2ban;
 service fail2ban restart
 
+#text gambar
+apt-get install boxes
+
+# text pelangi
+sudo apt-get install ruby
+sudo gem install lolcat
+
+# text warna
+cd
+rm -rf /root/.bashrc
+wget -O /root/.bashrc https://raw.githubusercontent.com/syahz86/y/debian7/.bashrc
+
+
 # install squid3
 apt-get -y install squid3
 wget -O /etc/squid3/squid.conf "https://raw.githubusercontent.com/muchigo/VPS/master/conf/squid.conf"
@@ -116,9 +129,14 @@ cd
 
 # Install Menu for OpenVPN
 cd
-wget https://raw.githubusercontent.com/muchigo/VPS/master/conf/menu
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/menu
 mv ./menu /usr/local/bin/menu
 chmod +x /usr/local/bin/menu
+
+# download script
+cd
+wget -O /usr/bin/user-login https://raw.githubusercontent.com/syahz86/VPN/master/conf/user-login.sh
+#cd
 
 # Restart Service
 chown -R www-data:www-data /home/vps/public_html
