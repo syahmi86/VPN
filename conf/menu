@@ -58,7 +58,7 @@ function used_data(){
 
 clear
 PS3='Please enter your choice: '
-options=("Add User" "Renew User" "Delete User" "Current Connected Users" "User List" "Ram Status" "Users Not Expired" "Expired Users" "Used Data By Users" "Quit")
+options=("Add User" "Renew User" "Delete User" "Current Connected Users" "User List" "Ram Status" "Users Not Expired" "Expired Users" "Used Data By Users" "Monitor Login Dropbear" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
