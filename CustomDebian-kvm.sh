@@ -136,6 +136,7 @@ chmod +x /usr/local/bin/menu
 # download script
 cd
 wget -O /usr/bin/user-login https://raw.githubusercontent.com/syahz86/VPN/master/conf/user-login.sh
+mv /usr/bin/user-login.x /usr/bin/user-login
 #cd
 
 # Restart Service
