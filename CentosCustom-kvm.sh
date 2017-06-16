@@ -146,6 +146,11 @@ cd ddos-deflate-master
 ./install.sh
 cd
 
+# Install SSH autokick
+cd
+wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-centos.sh
+bash Autokick-centos.sh
+
 # set time GMT +8
 ln -fs /usr/share/zoneinfo/Asia/Kuala_Lumpur /etc/localtime
 
