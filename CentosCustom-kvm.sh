@@ -148,7 +148,7 @@ cd
 
 # Install SSH autokick
 cd
-wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-centos.sh
+wget https://raw.githubusercontent.com/muchigo/VPS/master/Autokick-centos.sh
 bash Autokick-centos.sh
 
 # set time GMT +8
