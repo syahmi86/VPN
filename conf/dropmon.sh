@@ -46,7 +46,7 @@ echo "                        Script Modified by GollumVPN   "
 else
 echo "Gunakan perintah sh dropmon.sh [port]"
 echo "contoh : sh dropmon.sh 443"
-echo \n
-echo \n
+echo ' '
+echo ' '
 fi
 exit 0
