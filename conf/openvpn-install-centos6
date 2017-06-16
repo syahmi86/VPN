@@ -1,0 +1,117 @@
+#!/bin/bash
+# 
+# OPENVPN Centos 6
+
+	echo "What port do you want for OpenVPN?"
+	read -p "Port: " -e -i 1194 PORT
+	echo ""
+	
+# initialisasi var
+OS=`uname -m`;
+MYIP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | grep -v '127.0.0.2'`;
+MYIP2="s/xxxxxxxxx/$MYIP/g";
+
+# go to root
+cd
+
+# disable ipv6
+echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
+sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
+sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.d/rc.local
+
+# install wget and curl
+yum -y install wget curl
+
+# set time GMT +8
+ln -fs /usr/share/zoneinfo/Asia/Malaysia /etc/localtime
+
+# set locale
+#sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
+#service sshd restart
+
+# setting repo
+wget http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+wget http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+rpm -Uvh epel-release-6-8.noarch.rpm
+rpm -Uvh remi-release-6.rpm
+
+if [ "$OS" == "x86_64" ]; then
+  wget http://repository.it4i.cz/mirrors/repoforge/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+  rpm -Uvh rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+else
+  wget http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el6/en/i386/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.i686.rpm
+  rpm -Uvh rpmforge-release-0.5.3-1.el6.rf.i686.rpm
+fi
+
+sed -i 's/enabled = 1/enabled = 0/g' /etc/yum.repos.d/rpmforge.repo
+sed -i -e "/^\[remi\]/,/^\[.*\]/ s|^\(enabled[ \t]*=[ \t]*0\\)|enabled=1|" /etc/yum.repos.d/remi.repo
+rm -f *.rpm
+
+
+# install openvpn
+yum -y install openvpn
+cd /etc/openvpn/
+wget --no-check-certificate -O ~/easy-rsa.tar.gz https://github.com/OpenVPN/easy-rsa/archive/2.2.2.tar.gz
+tar xzf ~/easy-rsa.tar.gz -C ~/
+mkdir -p /etc/openvpn/easy-rsa/2.0/
+cp ~/easy-rsa-2.2.2/easy-rsa/2.0/* /etc/openvpn/easy-rsa/2.0/
+rm -rf ~/easy-rsa-2.2.2
+
+cd /etc/openvpn/easy-rsa/2.0/
+sed -i 's|`$EASY_RSA/whichopensslcnf $EASY_RSA`|/etc/openvpn/easy-rsa/2.0/openssl-1.0.0.cnf|' vars
+#sed -i 's|export KEY_SIZE=1024|export KEY_SIZE=2048|' /etc/openvpn/easy-rsa/2.0/vars
+. /etc/openvpn/easy-rsa/2.0/vars
+. /etc/openvpn/easy-rsa/2.0/clean-all
+#export EASY_RSA="${EASY_RSA:-.}"
+#"$EASY_RSA/pkitool" --initca $*
+#export EASY_RSA="${EASY_RSA:-.}"
+#"$EASY_RSA/pkitool" --server server
+#export KEY_CN="$CLIENT"
+#export EASY_RSA="${EASY_RSA:-.}"
+#"$EASY_RSA/pkitool" $CLIENT
+. /etc/openvpn/easy-rsa/2.0/build-ca
+. /etc/openvpn/easy-rsa/2.0/build-key-server server
+. /etc/openvpn/easy-rsa/2.0/build-dh
+
+wget -O /etc/openvpn/server.conf "https://raw.githubusercontent.com/syahz86/VPN/master/conf/1194-centos.conf"
+# configure openvpn client config
+cd /etc/openvpn/
+wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/syahz86/VPN/master/conf/1194-client.conf"
+sed -i $MYIP2 /etc/openvpn/client.ovpn
+echo "<ca>" >> /etc/openvpn/client.ovpn
+cat /etc/openvpn/easy-rsa/2.0/keys/ca.crt >> /etc/openvpn/client.ovpn
+echo -e "</ca>\n" >> /etc/openvpn/client.ovpn
+
+if [ $(ifconfig | cut -c 1-8 | sort | uniq -u | grep venet0 | grep -v venet0:) = "venet0" ];then
+      iptables -t nat -A POSTROUTING -o venet0 -j SNAT --to-source $MYIP
+else
+      iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o eth0 -j MASQUERADE
+fi
+sed -i 's/1194/$PORT/g' /etc/openvpn/server.ovpn
+sed -i 's/1194/$PORT/g' /etc/openvpn/client.ovpn
+echo "username" > pass.txt
+echo "password" >> pass.txt
+tar cf client.tar client.ovpn pass.txt
+#cp client.tar /etc/openvpn/
+cp client.tar /root/
+cd
+service openvpn restart
+sysctl -w net.ipv4.ip_forward=1
+sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
+sed -i 's/net.ipv4.ip_forward = 0/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
+sysctl -p
+
+# info 
+clear
+echo "Autoscript OpenVPN Centos6" | 
+echo "==========================================" | 
+echo ""  | 
+echo "Service"  | 
+echo "-------"  | 
+echo "OpenVPN  : TCP $PORT "
+echo "client config : di folder /etc/openvpn/client.tar"  | 
+echo "-------"  | 
+echo "Script Modified by Syahz86"  | 
+echo "Thanks to Original Creator Kang Arie & Mikodemos" |
+echo ""  | 
+echo "==============================================="  | 
