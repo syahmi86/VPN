@@ -174,6 +174,11 @@ cd
 wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-centos.sh
 bash Autokick-centos.sh
 
+# install monitor login user dropbear
+cd
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlogin.sh
+chmod +x userlogin.sh
+
 # set time GMT +8
 ln -fs /usr/share/zoneinfo/Asia/Kuala_Lumpur /etc/localtime
 
@@ -207,7 +212,7 @@ echo "Timezone : Asia/Malaysia"
 echo "Fail2Ban : [on]"
 echo "IPv6     : [off]"
 echo "Status   : please type ./status to check user status"
-echo ""
+echo "Dropbear : please type sh userlogin.sh port to check login user"
 echo "Please Reboot your VPS !"
 echo ""
 echo "==============================================="
