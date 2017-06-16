@@ -65,6 +65,11 @@ chmod +x /usr/bin/screenfetch
 echo "clear" >> .bash_profile
 echo "screenfetch" >> .bash_profile
 
+# install monitor login user dropbear
+cd
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlogin.sh
+chmod +x userlogin.sh
+
 # install webserver
 cd
 wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/muchigo/VPS/master/conf/nginx.conf"
@@ -209,7 +214,7 @@ echo "Timezone : Asia/Malaysia"
 echo "Fail2Ban : [on]"
 echo "IPv6     : [off]"
 echo "Status   : please type ./status to check user status"
-echo ""
+echo "Dropbear : please type sh userlogin.sh port to check login user"
 echo "Please Reboot your VPS !"
 echo ""
 echo "==============================================="
