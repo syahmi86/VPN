@@ -3,6 +3,9 @@
 # go to root
 cd
 
+# install crond service
+yum install vixie-cron -y
+
 # download userlimit
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlimit-centos.sh
 chmod +x userlimit-centos.sh
