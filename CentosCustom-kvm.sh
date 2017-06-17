@@ -33,6 +33,9 @@ yum -y remove cyrus-sasl
 # update
 yum -y update
 
+# install crond service
+yum install vixie-cron -y
+
 # install webserver
 yum -y install nginx php-fpm php-cli
 service nginx restart
@@ -44,7 +47,6 @@ chkconfig php-fpm on
 yum -y install openvpn vnstat git nano
 yum -y groupinstall 'Development Tools'
 yum -y install cmake
-
 
 # exim off
 service exim stop
@@ -65,24 +67,47 @@ chmod +x /usr/bin/screenfetch
 echo "clear" >> .bash_profile
 echo "screenfetch" >> .bash_profile
 
-# install monitor login user dropbear
-cd
-wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlogin.sh
-chmod +x userlogin.sh
-
 # install webserver
 cd
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/muchigo/VPS/master/conf/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/syahz86/VPN/master/conf/nginx.conf"
 sed -i 's/www-data/nginx/g' /etc/nginx/nginx.conf
 mkdir -p /home/vps/public_html
-echo "<pre>Setup by Kiellez</pre>" > /home/vps/public_html/index.html
+echo "<pre>Setup by Syahmi</pre>" > /home/vps/public_html/index.html
 echo "<?php phpinfo(); ?>" > /home/vps/public_html/info.php
 rm /etc/nginx/conf.d/*
-wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/muchigo/VPS/master/conf/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/syahz86/VPN/master/conf/vps.conf"
 sed -i 's/apache/nginx/g' /etc/php-fpm.d/www.conf
 chmod -R +rx /home/vps
 service php-fpm restart
 service nginx restart
+
+# install openvpn
+wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/syahz86/VPN/master/conf/openvpn.tar"
+cd /etc/openvpn/
+tar xf openvpn.tar
+wget -O /etc/openvpn/1194.conf "https://raw.githubusercontent.com/syahz86/VPN/master/conf/1194-centos.conf"
+wget -O /etc/iptables.up.rules "https://raw.githubusercontent.com/syahz86/VPN/master/conf/iptables.up.rules"
+sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.local
+sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.d/rc.local
+MYIP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | grep -v '192.168'`;
+MYIP2="s/xxxxxxxxx/$MYIP/g";
+sed -i $MYIP2 /etc/iptables.up.rules;
+sed -i 's/venet0/eth0/g' /etc/iptables.up.rules
+iptables-restore < /etc/iptables.up.rules
+sysctl -w net.ipv4.ip_forward=1
+sed -i 's/net.ipv4.ip_forward = 0/net.ipv4.ip_forward = 1/g' /etc/sysctl.conf
+service openvpn restart
+chkconfig openvpn on
+cd
+
+# configure openvpn client config
+cd /etc/openvpn/
+wget -O /etc/openvpn/1194-client.ovpn "https://raw.githubusercontent.com/syahz86/VPN/master/conf/1194-client.conf"
+sed -i $MYIP2 /etc/openvpn/1194-client.ovpn;
+PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
+tar cf client.tar 1194-client.ovpn
+cp client.tar /home/vps/public_html/
+cd
 
 # setting port ssh
 sed -i '/Port 22/a Port 143' /etc/ssh/sshd_config
@@ -118,7 +143,7 @@ chkconfig fail2ban on
 
 # install squid
 yum -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/muchigo/VPS/master/conf/squid.conf"
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/syahz86/VPN/master/conf/squid.conf"
 sed -i $MYIP2 /etc/squid/squid.conf;
 service squid restart
 chkconfig squid on
@@ -135,7 +160,7 @@ chkconfig webmin on
 
 # User Status
 cd
-wget https://raw.githubusercontent.com/muchigo/VPS/master/conf/status
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/status
 chmod +x status
 
 # Install Dos Deflate
@@ -146,10 +171,10 @@ cd ddos-deflate-master
 ./install.sh
 cd
 
-# Install SSH autokick
+# install monitor login user dropbear
 cd
-wget https://raw.githubusercontent.com/muchigo/VPS/master/Autokick-centos.sh
-bash Autokick-centos.sh
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlogin.sh
+chmod +x userlogin.sh
 
 # set time GMT +8
 ln -fs /usr/share/zoneinfo/Asia/Kuala_Lumpur /etc/localtime
@@ -170,7 +195,7 @@ chkconfig crond on
 
 # info
 clear
-echo "Setup by Kiellez"
+echo "Setup by Syahmi"
 echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.tar)"
 echo "OpenSSH  : 22, 143"
 echo "Dropbear : 109, 110, 443"
@@ -183,7 +208,6 @@ echo "vnstat   : http://$MYIP:81/vnstat/"
 echo "Timezone : Asia/Malaysia"
 echo "Fail2Ban : [on]"
 echo "IPv6     : [off]"
-echo "Status   : please type ./status to check user status"
 echo "Dropbear : please type sh userlogin.sh port to check login user"
 echo "Please Reboot your VPS !"
 echo ""
