@@ -75,5 +75,9 @@ chmod +x /usr/bin/usernew
 
 # *Jalankan command usernew untuk add user baru
 
+# User Expired Centos
  
+ wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/autoexpire.sh && chmod +x autoexpire.sh
+ 
+ untuk menggunakannya taip: sh autoexpire.sh
  
