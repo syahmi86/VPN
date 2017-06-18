@@ -68,10 +68,12 @@
  bash CustomDebian-kvm.sh
 
 # Add Usernew Centos
+
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/create-user.sh
 cp /root/create-user.sh /usr/bin/usernew
 chmod +x /usr/bin/usernew
-/*Jalankan command usernew untuk add user baru
+
+# *Jalankan command usernew untuk add user baru
 
  
  
