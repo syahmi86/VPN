@@ -1,8 +1,7 @@
 #!/bin/bash
-#Script auto create trial user SSH
-#yg akan expired setelah 1 hari
-#www.fawzya.net - 085799054816
+#Support us at GollumVPN
 
+echo -e "Create new user ID"
 read -p "Username : " Login
 read -p "Password : " Pass
 read -p "Expired (hari): " masaaktif
