@@ -25,7 +25,7 @@ MYIP=$(wget -qO- ipv4.icanhazip.com)
 	echo -e "\e[031;1m 2\e[0m) Hapus Akun SSH/OpenVPN (\e[34;1muser-del\e[0m)"
 	echo -e "\e[031;1m 3\e[0m) Monitoring Dropbear (\e[34;1msh userlogin.sh [PORT]\e[0m)"
 	echo -e "\e[031;1m 4\e[0m) Senarai User (\e[34;1muser-list\e[0m)"
-	echo -e "\e[031;1m 5\e[0m) User Expire (\e[34;1mcat > expireduser.txt\e[0m)"
+	echo -e "\e[031;1m 5\e[0m) User Expire (\e[34;1mcat expireduser.txt\e[0m)"
 	echo -e "\e[031;1m 6\e[0m) Restart Dropbear (\e[34;1re-drop\e[0m)"
 	echo -e "\e[031;1m 7\e[0m) Reboot Server (\e[34;1mreboot\e[0m)"
 	echo ""
@@ -56,7 +56,7 @@ MYIP=$(wget -qO- ipv4.icanhazip.com)
 		;;
 		5)
 		clear
-		cat > expireduser.txt
+		cat expireduser.txt
 		exit
 		;;
 		6)
