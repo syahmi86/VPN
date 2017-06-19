@@ -78,7 +78,7 @@
 ```
 # Custom Centos 6 64-bit Webmin
 ```
-https://raw.githubusercontent.com/syahz86/VPN/master/CentosCustom-kvm.sh
+wget https://raw.githubusercontent.com/syahz86/VPN/master/CentosCustom-kvm.sh
 ```
 - kemudian paste nie dan tunggu sehingga selesai
 ```
