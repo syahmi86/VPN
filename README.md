@@ -86,7 +86,11 @@ Jalankan command usernew untuk add user baru
  ```
  wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/autoexpire.sh && chmod +x autoexpire.sh
  ```
- untuk menggunakannya taip: ```ruby sh autoexpire.sh```
+ untuk menggunakannya taip: 
+ ```ruby 
+ sh autoexpire.sh```
  
- untuk melihat user yang sudah expired taip : ```ruby cat expireduser.txt```
+ untuk melihat user yang sudah expired taip : 
+ ```ruby 
+ cat expireduser.txt```
  
