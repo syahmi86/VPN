@@ -190,6 +190,15 @@ cd
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/autoexpire.sh
 chmod +x autoexpire.sh
 
+# Centos Menu
+cd
+yum update -y
+yum install python -y
+yum install git -y
+git clone https://github.com/syahz86/menu.git
+cp menu/menu.py /usr/bin/menu
+chmod +x /usr/bin/menu
+
 #bonus block playstation
 iptables -A OUTPUT -d account.sonyentertainmentnetwork.com -j DROP
 iptables -A OUTPUT -d auth.np.ac.playstation.net -j DROP
@@ -285,10 +294,10 @@ echo "badvpn   : badvpn-udpgw port 7300"
 echo "Webmin   : http://$MYIP:10000/"
 echo "vnstat   : http://$MYIP:81/vnstat/"
 echo "Timezone : Asia/Malaysia"
-echo "Fail2Ban : [on]"
-echo "IPv6     : [off]"
-echo "Torrent Block  : [on]"
-echo "Torrent Playstation  : [on]"
+echo "Fail2Ban :" echo -e "\e[32mON\e[0m" 
+echo "IPv6     :" echo -e "\033[31mOFF\e[0m"
+echo "Torrent Block :" echo -e "\e[32mON\e[0m" 
+echo "Playstation Block :" echo -e "\e[32mON\e[0m"
 echo "Please type sh userlogin.sh port to check login user"
 echo "Please type usernew for new user"
 echo "Please type sh autoexpire.sh to run script and cat expireduser.txt for expired list"
