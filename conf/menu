@@ -54,54 +54,7 @@ function used_data(){
 	myip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | head -n1`
 	myint=`ifconfig | grep -B1 "inet addr:$myip" | head -n1 | awk '{print $1}'`
 	ifconfig $myint | grep "RX bytes" | sed -e 's/ *RX [a-z:0-9]*/Received: /g' | sed -e 's/TX [a-z:0-9]*/\nTransfered: /g'
-}
 
-function monitor_login_dropbear(){
-        data=( `ps aux | grep -i dropbear | awk '{print $2}'`);
-echo "----------------------------------------------"
-echo "Checking Dropbear login" | lolcat;
-echo "----------------------------------------------"
-echo "   PID.  USERNAME.       IP" | lolcat
-echo "----------------------------------------------"
-
-for PID in "${data[@]}"
-do
-	#echo "check $PID";
-	NUM=`cat /var/log/auth.log | grep -i dropbear | grep -i "Password auth succeeded" | grep "dropbear\[$PID\]" | wc -l`;
-	username=`cat /var/log/auth.log | grep -i dropbear | grep -i "Password auth succeeded" | grep "dropbear\[$PID\]" | awk '{print $10}'`;
-	IP=`cat /var/log/auth.log | grep -i dropbear | grep -i "Password auth succeeded" | grep "dropbear\[$PID\]" | awk '{print $12}'`;
-	if [ $NUM -eq 1 ]; then
-		echo "$PID - $username - $IP";
-	fi
-done
-
-echo "";
-
-data=( `ps aux | grep "\[priv\]" | sort -k 72 | awk '{print $2}'`);
-echo "----------------------------------------------"
-echo "Checking OpenSSH login" | lolcat;
-echo "----------------------------------------------"
-for PID in "${data[@]}"
-do
-	#echo "check $PID";
-	NUM=`cat /var/log/auth.log | grep -i sshd | grep -i "Accepted password for" | grep "sshd\[$PID\]" | wc -l`;
-	username=`cat /var/log/auth.log | grep -i sshd | grep -i "Accepted password for" | grep "sshd\[$PID\]" | awk '{print $9}'`;
-	IP=`cat /var/log/auth.log | grep -i sshd | grep -i "Accepted password for" | grep "sshd\[$PID\]" | awk '{print $11}'`;
-	if [ $NUM -eq 1 ]; then
-		echo "$PID - $username - $IP";
-	fi
-done
-
-#echo "";
-
-#echo "-----------------------------------"
-#echo "Checking OpenVPN login" | lolcat;
-#echo "-----------------------------------"
-#tail -f /etc/openvpn/server-vpn.log
-
-	echo " DEVELOPED BY SYAHZ86 "| lolcat
-echo "----------------------------------------------------------------"
-echo ""
 }
 
 clear
@@ -153,11 +106,7 @@ do
 			used_data
 			break
 			;;
-		"Monitor Login Dropbear")
-		        clear
-	                user-login
-		        break
-                        ;;
+
         "Quit")
             break
             ;;
