@@ -72,11 +72,12 @@ chkconfig nginx on
 chkconfig php-fpm on
 
 # install essential package
-yum -y install openvpn vnstat git nano
+yum -y install rrdtool screen iftop htop nmap bc nethogs openvpn vnstat ngrep mtr git zsh mrtg unrar rsyslog rkhunter mrtg net-snmp net-snmp-utils expect nano bind-utils
 yum -y groupinstall 'Development Tools'
 yum -y install cmake
+yum -y --enablerepo=rpmforge install axel sslh ptunnel unrar
 
-# exim off
+# disable exim
 service exim stop
 chkconfig exim off
 
