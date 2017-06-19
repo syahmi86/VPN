@@ -80,34 +80,38 @@ service php-fpm restart
 service nginx restart
 
 # install openvpn
-wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/syahz86/VPN/master/conf/openvpn.tar"
+wget -O /etc/openvpn/openvpn.zip "https://raw.githubusercontent.com/syahz86/VPS/master/conf/openvpn-key.zip"
 cd /etc/openvpn/
-tar xf openvpn.tar
-wget -O /etc/openvpn/1194.conf "https://raw.githubusercontent.com/syahz86/VPN/master/conf/1194-centos.conf"
-service openvpn restart
-sysctl -w net.ipv4.ip_forward=1
-sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
+unzip openvpn.zip
+wget -O /etc/openvpn/80.conf "https://raw.githubusercontent.com/syahz86/VPS/master/conf/80-centos.conf"
+if [ "$OS" == "x86_64" ]; then
+  wget -O /etc/openvpn/80.conf "https://raw.githubusercontent.com/syahz86/VPS/master/conf/80-centos64.conf"
+fi
 wget -O /etc/iptables.up.rules "https://raw.githubusercontent.com/syahz86/VPS/master/conf/iptables.up.rules"
 sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.local
-MYIP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | grep -v '192.168'`;
+sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.d/rc.local
+MYIP=`curl icanhazip.com`;
 MYIP2="s/xxxxxxxxx/$MYIP/g";
-sed -i 's/port 1194/port 6500/g' /etc/openvpn/1194.conf
 sed -i $MYIP2 /etc/iptables.up.rules;
+sed -i 's/venet0/eth0/g' /etc/iptables.up.rules
 iptables-restore < /etc/iptables.up.rules
+sysctl -w net.ipv4.ip_forward=1
+sed -i 's/net.ipv4.ip_forward = 0/net.ipv4.ip_forward = 1/g' /etc/sysctl.conf
 service openvpn restart
+chkconfig openvpn on
+cd
 
 # configure openvpn client config
 cd /etc/openvpn/
-wget -O /etc/openvpn/1194-client.ovpn "https://raw.githubusercontent.com/syahz86/VPS/master/conf/1194-client.conf"
-sed -i $MYIP2 /etc/openvpn/1194-client.ovpn;
-sed -i 's/1194/6500/g' /etc/openvpn/1194-client.ovpn
-NAME=`uname -n`.`awk '/^domain/ {print $2}' /etc/resolv.conf`;
-mv /etc/openvpn/1194-client.ovpn /etc/openvpn/$NAME.ovpn
-useradd -M -s /bin/false test1
-echo "test1:test1" | chpasswd
-tar cf client.tar $NAME.ovpn
+wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/syahz86/VPS/master/conf/openvpn.conf"
+sed -i $MYIP2 /etc/openvpn/client.ovpn;
+useradd -g 0 -d /root/ -s /bin/bash $dname
+echo $dname:"test1" | chpasswd
+echo $dname > pass.txt
+echo "test1" >> pass.txt
+tar cf client.tar client.ovpn pass.txt
 cp client.tar /home/vps/public_html/
-cd
+cp client.ovpn /home/vps/public_html/
 
 # setting port ssh
 sed -i '/Port 22/a Port 143' /etc/ssh/sshd_config
@@ -188,18 +192,18 @@ cp /root/create-user.sh /usr/bin/usernew
 chmod +x /usr/bin/usernew
 
 # User Expired Centos
-cd
+cd /usr/bin
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/autoexpire.sh
 chmod +x autoexpire.sh
+sh autoexpire.sh
 
-# Centos Menu
-cd
-yum update -y
-yum install python -y
-yum install git -y
-git clone https://github.com/syahz86/menu.git
-cp menu/menu.py /usr/bin/menu
-chmod +x /usr/bin/menu
+# Download Script Menu
+cd /usr/bin
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-limit && chmod +x user-limit
+wget https://raw.githubusercontent.com/syahz86/VPN/master/menu && chmod +x menu
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-del && chmod +x user-del
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-list && chmod +x user-list
+wget https://raw.githubusercontent.com/syahz86/Centos/master/re-drop && chmod +x re-drop
 
 #bonus block playstation
 iptables -A OUTPUT -d account.sonyentertainmentnetwork.com -j DROP
@@ -302,6 +306,6 @@ echo "Torrent Block :[on]"
 echo "Playstation Block :[on]" 
 echo "Please type sh userlogin.sh port to check login user"
 echo "Please type usernew for new user"
-echo "Please type sh autoexpire.sh to run script and cat expireduser.txt for expired list"
+echo "Please type cat expireduser.txt for expired list"
 
 echo "==============================================="
