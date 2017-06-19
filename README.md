@@ -1,4 +1,4 @@
- Autoscript VPS created by [Telegram: Si Tony](https://t.me/simuncaibetollah)
+ Autoscript VPS created by [Telegram: Si Tony](https://t.me/simuncaibetollah):shipit:
 
 # Centos 6.8 64-bit Webmin
 ```
