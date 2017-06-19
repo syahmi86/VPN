@@ -95,7 +95,7 @@ Jalankan command```usernew```untuk add user baru
  
  # Cara Mengatasi IP VPS di Blacklist oleh PlayStation Network
  
- -Copy paste je script dan tekan enter
+ - Copy paste je script dan tekan enter
  ```iptables -A OUTPUT -d account.sonyentertainmentnetwork.com -j DROP
 iptables -A OUTPUT -d auth.np.ac.playstation.net -j DROP
 iptables -A OUTPUT -d auth.api.sonyentertainmentnetwork.com -j DROP
