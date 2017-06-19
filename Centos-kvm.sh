@@ -98,10 +98,14 @@ service openvpn restart
 
 # configure openvpn client config
 cd /etc/openvpn/
-wget -O /etc/openvpn/1194-client.ovpn "https://raw.githubusercontent.com/syahz86/VPN/master/conf/1194-client.conf"
+wget -O /etc/openvpn/1194-client.ovpn "https://raw.githubusercontent.com/syahz86/VPS/master/conf/1194-client.conf"
 sed -i $MYIP2 /etc/openvpn/1194-client.ovpn;
-PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
-tar cf client.tar 1194-client.ovpn
+sed -i 's/1194/6500/g' /etc/openvpn/1194-client.ovpn
+NAME=`uname -n`.`awk '/^domain/ {print $2}' /etc/resolv.conf`;
+mv /etc/openvpn/1194-client.ovpn /etc/openvpn/$NAME.ovpn
+useradd -M -s /bin/false test1
+echo "test1:test1" | chpasswd
+tar cf client.tar $NAME.ovpn
 cp client.tar /home/vps/public_html/
 cd
 
