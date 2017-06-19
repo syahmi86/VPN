@@ -176,6 +176,84 @@ cd
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlogin.sh
 chmod +x userlogin.sh
 
+# EasyAdd Usernew Centos
+cd
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/create-user.sh
+cp /root/create-user.sh /usr/bin/usernew
+chmod +x /usr/bin/usernew
+
+# User Expired Centos
+cd
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/autoexpire.sh
+chmod +x autoexpire.sh
+
+#bonus block playstation
+iptables -A OUTPUT -d account.sonyentertainmentnetwork.com -j DROP
+iptables -A OUTPUT -d auth.np.ac.playstation.net -j DROP
+iptables -A OUTPUT -d auth.api.sonyentertainmentnetwork.com -j DROP
+iptables -A OUTPUT -d auth.api.np.ac.playstation.net -j DROP
+iptables-save
+
+#bonus block torrent
+iptables -A INPUT -m string --algo bm --string "BitTorrent" -j REJECT
+iptables -A INPUT -m string --algo bm --string "BitTorrent protocol" -j REJECT
+iptables -A INPUT -m string --algo bm --string "peer_id=" -j REJECT
+iptables -A INPUT -m string --algo bm --string ".torrent" -j REJECT
+iptables -A INPUT -m string --algo bm --string "announce.php?passkey=" -j REJECT
+iptables -A INPUT -m string --algo bm --string "torrent" -j REJECT
+iptables -A INPUT -m string --algo bm --string "info_hash" -j REJECT
+iptables -A INPUT -m string --algo bm --string "/default.ida?" -j REJECT
+iptables -A INPUT -m string --algo bm --string ".exe?/c+dir" -j REJECT
+iptables -A INPUT -m string --algo bm --string ".exe?/c_tftp" -j REJECT
+iptables -A INPUT -m string --string "peer_id" --algo kmp -j REJECT
+iptables -A INPUT -m string --string "BitTorrent" --algo kmp -j REJECT
+iptables -A INPUT -m string --string "BitTorrent protocol" --algo kmp -j REJECT
+iptables -A INPUT -m string --string "bittorrent-announce" --algo kmp -j REJECT
+iptables -A INPUT -m string --string "announce.php?passkey=" --algo kmp -j REJECT
+iptables -A INPUT -m string --string "find_node" --algo kmp -j REJECT
+iptables -A INPUT -m string --string "info_hash" --algo kmp -j REJECT
+iptables -A INPUT -m string --string "get_peers" --algo kmp -j REJECT
+iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j REJECT
+iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j REJECT
+iptables -A FORWARD -m string --algo bm --string "peer_id=" -j REJECT
+iptables -A FORWARD -m string --algo bm --string ".torrent" -j REJECT
+iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j REJECT
+iptables -A FORWARD -m string --algo bm --string "torrent" -j REJECT
+iptables -A FORWARD -m string --algo bm --string "info_hash" -j REJECT
+iptables -A FORWARD -m string --algo bm --string "/default.ida?" -j REJECT
+iptables -A FORWARD -m string --algo bm --string ".exe?/c+dir" -j REJECT
+iptables -A FORWARD -m string --algo bm --string ".exe?/c_tftp" -j REJECT
+iptables -A FORWARD -m string --string "peer_id" --algo kmp -j REJECT
+iptables -A FORWARD -m string --string "BitTorrent" --algo kmp -j REJECT
+iptables -A FORWARD -m string --string "BitTorrent protocol" --algo kmp -j REJECT
+iptables -A FORWARD -m string --string "bittorrent-announce" --algo kmp -j REJECT
+iptables -A FORWARD -m string --string "announce.php?passkey=" --algo kmp -j REJECT
+iptables -A FORWARD -m string --string "find_node" --algo kmp -j REJECT
+iptables -A FORWARD -m string --string "info_hash" --algo kmp -j REJECT
+iptables -A FORWARD -m string --string "get_peers" --algo kmp -j REJECT
+iptables -A OUTPUT -m string --algo bm --string "BitTorrent" -j REJECT
+iptables -A OUTPUT -m string --algo bm --string "BitTorrent protocol" -j REJECT
+iptables -A OUTPUT -m string --algo bm --string "peer_id=" -j REJECT
+iptables -A OUTPUT -m string --algo bm --string ".torrent" -j REJECT
+iptables -A OUTPUT -m string --algo bm --string "announce.php?passkey=" -j REJECT
+iptables -A OUTPUT -m string --algo bm --string "torrent" -j REJECT
+iptables -A OUTPUT -m string --algo bm --string "info_hash" -j REJECT
+iptables -A OUTPUT -m string --algo bm --string "/default.ida?" -j REJECT
+iptables -A OUTPUT -m string --algo bm --string ".exe?/c+dir" -j REJECT
+iptables -A OUTPUT -m string --algo bm --string ".exe?/c_tftp" -j REJECT
+iptables -A OUTPUT -m string --string "peer_id" --algo kmp -j REJECT
+iptables -A OUTPUT -m string --string "BitTorrent" --algo kmp -j REJECT
+iptables -A OUTPUT -m string --string "BitTorrent protocol" --algo kmp -j REJECT
+iptables -A OUTPUT -m string --string "bittorrent-announce" --algo kmp -j REJECT
+iptables -A OUTPUT -m string --string "announce.php?passkey=" --algo kmp -j REJECT
+iptables -A OUTPUT -m string --string "find_node" --algo kmp -j REJECT
+iptables -A OUTPUT -m string --string "info_hash" --algo kmp -j REJECT
+iptables -A OUTPUT -m string --string "get_peers" --algo kmp -j REJECT
+iptables -A INPUT -p tcp --dport 25 -j REJECT   
+iptables -A FORWARD -p tcp --dport 25 -j REJECT 
+iptables -A OUTPUT -p tcp --dport 25 -j REJECT 
+iptables-save
+
 # set time GMT +8
 ln -fs /usr/share/zoneinfo/Asia/Kuala_Lumpur /etc/localtime
 
@@ -195,20 +273,22 @@ chkconfig crond on
 
 # info
 clear
-echo "Setup by Syahmi"
+echo "Setup by GollumVPN"
 echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.tar)"
 echo "OpenSSH  : 22, 143"
 echo "Dropbear : 109, 110, 443"
 echo "Squid3   : 8080 (limit to IP SSH)"
 echo "badvpn   : badvpn-udpgw port 7300"
-echo ""
-echo "----------"
 echo "Webmin   : http://$MYIP:10000/"
 echo "vnstat   : http://$MYIP:81/vnstat/"
 echo "Timezone : Asia/Malaysia"
 echo "Fail2Ban : [on]"
 echo "IPv6     : [off]"
-echo "Dropbear : please type sh userlogin.sh port to check login user"
-echo "Please Reboot your VPS !"
-echo ""
+echo "Torrent Block  : [on]"
+echo "Torrent Playstation  : [on]"
+echo "Please type sh userlogin.sh port to check login user"
+echo "Please type usernew for new user"
+echo "Please type usernew for new user"
+echo "Please type sh autoexpire.sh to run script and cat expireduser.txt for expired list"
+
 echo "==============================================="
