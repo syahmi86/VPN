@@ -1,11 +1,27 @@
 #!/bin/bash
 
+# initialisasi var
+OS=`uname -p`;
+ether=`ifconfig | cut -c 1-8 | sort | uniq -u | grep venet0 | grep -v venet0:`
+if [ "$ether" = "" ]; then
+        ether=eth0
+fi
+#ether='ifconfig -a | sed 's/[ \t].*//;/^\(lo\|\)$/d' | grep -v venet0:';
+MYIP=`curl -s ifconfig.me`;
+MYIP2="s/xxxxxxxxx/$MYIP/g";
+
 # go to root
 cd
 
-# disable se linux
-echo 0 > /selinux/enforce
-sed -i 's/SELINUX=enforcing/SELINUX=disable/g'  /etc/sysconfig/selinux
+# set time GMT +8
+ln -fs /usr/share/zoneinfo/Asia/Malaysia /etc/localtime
+
+#DISABLE SELINUX START
+echo -n "Disable selinux..."
+setenforce 0
+sed -i "/^#/n;s/enforcing/disabled/" /etc/selinux/config
+echo "Done!"
+#DESABLE SELINUX END
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
