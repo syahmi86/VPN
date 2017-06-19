@@ -179,6 +179,13 @@ cd
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlogin.sh
 chmod +x userlogin.sh
 
+#bonus block playstation
+iptables -A OUTPUT -d account.sonyentertainmentnetwork.com -j DROP
+iptables -A OUTPUT -d auth.np.ac.playstation.net -j DROP
+iptables -A OUTPUT -d auth.api.sonyentertainmentnetwork.com -j DROP
+iptables -A OUTPUT -d auth.api.np.ac.playstation.net -j DROP
+iptables-save
+
 #bonus block torrent
 iptables -A INPUT -m string --algo bm --string "BitTorrent" -j REJECT
 iptables -A INPUT -m string --algo bm --string "BitTorrent protocol" -j REJECT
@@ -272,6 +279,7 @@ echo "Timezone : Asia/Malaysia"
 echo "Fail2Ban : [on]"
 echo "IPv6     : [off]"
 echo "Torrent Block  : [on]"
+echo "Torrent Playstation  : [on]"
 echo "Dropbear : please type sh userlogin.sh port to check login user"
 echo "Please Reboot your VPS !"
 echo ""
