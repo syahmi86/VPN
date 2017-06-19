@@ -13,7 +13,7 @@
 ```
  wget https://raw.githubusercontent.com/syahz86/VPN/master/UnlimitedUbuntu.sh
 ```
- kemudian paste nie dan tunggu sehingga selesai 
+ - kemudian paste nie dan tunggu sehingga selesai 
 ```
  bash UnlimitedUbuntu.sh
 ```
@@ -22,7 +22,7 @@
 ```
  wget https://raw.githubusercontent.com/syahz86/VPN/master/UnlimitedDebian8.sh
 ```
- kemudian paste nie dan tunggu sehingga selesai
+ - kemudian paste nie dan tunggu sehingga selesai
 ```
  bash UnlimitedDebian8.sh
 ```
@@ -31,7 +31,7 @@
 ```
  wget https://raw.githubusercontent.com/syahz86/VPN/master/Debian-kvm.sh
  ```
- kemudian paste nie dan tunggu sehingga selesai
+ - kemudian paste nie dan tunggu sehingga selesai
 ```
  bash Debian-kvm.sh
  ```
@@ -40,7 +40,7 @@
  ```
  wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-debian.sh
  ```
- kemudian paste nie dan tunggu sehingga selesai
+ - kemudian paste nie dan tunggu sehingga selesai
  ```
  bash Autokick-debian.sh
  ```
@@ -49,7 +49,7 @@
 ``` 
  wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-centos.sh
  ```
- kemudian paste nie dan tunggu sehingga selesai
+ - kemudian paste nie dan tunggu sehingga selesai
  ```
  bash Autokick-centos.sh
  ```
@@ -58,7 +58,7 @@
 ```
  wget https://raw.githubusercontent.com/syahz86/VPN/master/speedtest.sh
  ```
- kemudian paste nie dan tunggu sehingga selesai
+ - kemudian paste nie dan tunggu sehingga selesai
  ```
  bash speedtest.sh
  ```
@@ -67,7 +67,7 @@
 ```
  wget https://raw.githubusercontent.com/syahz86/VPN/master/CustomDebian-kvm.sh
 ```
- kemudian paste nie dan tunggu sehingga selesai
+ - kemudian paste nie dan tunggu sehingga selesai
 ```
  bash CustomDebian-kvm.sh
 ```
