@@ -179,6 +179,17 @@ cd
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlogin.sh
 chmod +x userlogin.sh
 
+# EasyAdd Usernew Centos
+cd
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/create-user.sh
+cp /root/create-user.sh /usr/bin/usernew
+chmod +x /usr/bin/usernew
+
+# User Expired Centos
+cd
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/autoexpire.sh
+chmod +x autoexpire.sh
+
 #bonus block playstation
 iptables -A OUTPUT -d account.sonyentertainmentnetwork.com -j DROP
 iptables -A OUTPUT -d auth.np.ac.playstation.net -j DROP
@@ -247,7 +258,7 @@ iptables -A OUTPUT -p tcp --dport 25 -j REJECT
 iptables-save
 
 # set time GMT +8
-ln -fs /usr/share/zoneinfo/Asia/Kuala_Lumpur /etc/localtime
+ln -fs /usr/share/zoneinfo/Asia/Malaysia /etc/localtime
 
 # Restart Service
 chown -R nginx:nginx /home/vps/public_html
@@ -265,14 +276,12 @@ chkconfig crond on
 
 # info
 clear
-echo "Setup by Syahmi"
+echo "Setup by GollumVPN"
 echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.tar)"
 echo "OpenSSH  : 22, 143"
 echo "Dropbear : 109, 110, 443"
 echo "Squid3   : 8080 (limit to IP SSH)"
 echo "badvpn   : badvpn-udpgw port 7300"
-echo ""
-echo "----------"
 echo "Webmin   : http://$MYIP:10000/"
 echo "vnstat   : http://$MYIP:81/vnstat/"
 echo "Timezone : Asia/Malaysia"
@@ -280,7 +289,9 @@ echo "Fail2Ban : [on]"
 echo "IPv6     : [off]"
 echo "Torrent Block  : [on]"
 echo "Torrent Playstation  : [on]"
-echo "Dropbear : please type sh userlogin.sh port to check login user"
-echo "Please Reboot your VPS !"
-echo ""
+echo "Please type sh userlogin.sh port to check login user"
+echo "Please type usernew for new user"
+echo "Please type usernew for new user"
+echo "Please type sh autoexpire.sh to run script and cat expireduser.txt for expired list"
+
 echo "==============================================="
