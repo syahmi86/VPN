@@ -82,14 +82,17 @@ service php-fpm restart
 service nginx restart
 
 # install openvpn
-wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/syahz86/VPN/master/conf/openvpn.tar"
+wget -O /etc/openvpn/openvpn.zip "https://raw.githubusercontent.com/syahz86/VPS/master/conf/openvpn-key.zip"
 cd /etc/openvpn/
-tar xf openvpn.tar
-wget -O /etc/openvpn/1194.conf "https://raw.githubusercontent.com/syahz86/VPN/master/conf/1194-centos.conf"
-wget -O /etc/iptables.up.rules "https://raw.githubusercontent.com/syahz86/VPN/master/conf/iptables.up.rules"
+unzip openvpn.zip
+wget -O /etc/openvpn/80.conf "https://raw.githubusercontent.com/syahz86/VPS/master/conf/80-centos.conf"
+if [ "$OS" == "x86_64" ]; then
+  wget -O /etc/openvpn/80.conf "https://raw.githubusercontent.com/syahz86/VPS/master/conf/80-centos64.conf"
+fi
+wget -O /etc/iptables.up.rules "https://raw.githubusercontent.com/syahz86/VPS/master/conf/iptables.up.rules"
 sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.local
 sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.d/rc.local
-MYIP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | grep -v '192.168'`;
+MYIP=`curl icanhazip.com`;
 MYIP2="s/xxxxxxxxx/$MYIP/g";
 sed -i $MYIP2 /etc/iptables.up.rules;
 sed -i 's/venet0/eth0/g' /etc/iptables.up.rules
@@ -102,12 +105,15 @@ cd
 
 # configure openvpn client config
 cd /etc/openvpn/
-wget -O /etc/openvpn/1194-client.ovpn "https://raw.githubusercontent.com/syahz86/VPN/master/conf/1194-client.conf"
-sed -i $MYIP2 /etc/openvpn/1194-client.ovpn;
-PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
-tar cf client.tar 1194-client.ovpn
+wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/syahz86/VPS/master/conf/openvpn.conf"
+sed -i $MYIP2 /etc/openvpn/client.ovpn;
+useradd -g 0 -d /root/ -s /bin/bash $dname
+echo $dname:"test1" | chpasswd
+echo $dname > pass.txt
+echo "test1" >> pass.txt
+tar cf client.tar client.ovpn pass.txt
 cp client.tar /home/vps/public_html/
-cd
+cp client.ovpn /home/vps/public_html/
 
 # setting port ssh
 sed -i '/Port 22/a Port 143' /etc/ssh/sshd_config
@@ -183,9 +189,18 @@ cp /root/create-user.sh /usr/bin/usernew
 chmod +x /usr/bin/usernew
 
 # User Expired Centos
-cd
+cd /usr/bin
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/autoexpire.sh
 chmod +x autoexpire.sh
+sh autoexpire.sh
+
+# Download Script Menu
+cd /usr/bin
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-limit && chmod +x user-limit
+wget https://raw.githubusercontent.com/syahz86/VPN/master/menu && chmod +x menu
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-del && chmod +x user-del
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-list && chmod +x user-list
+wget https://raw.githubusercontent.com/syahz86/Centos/master/re-drop && chmod +x re-drop
 
 #bonus block playstation
 iptables -A OUTPUT -d account.sonyentertainmentnetwork.com -j DROP
@@ -288,6 +303,6 @@ echo "Torrent Block :[on]"
 echo "Playstation Block :[on]" 
 echo "Please type sh userlogin.sh port to check login user"
 echo "Please type usernew for new user"
-echo "Please type sh autoexpire.sh to run script and cat expireduser.txt for expired list"
+echo "Please type cat expireduser.txt for expired list"
 
 echo "==============================================="
