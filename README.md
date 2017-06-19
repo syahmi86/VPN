@@ -1,7 +1,8 @@
- ###### Autoscript VPS created by [Telegram: Si Tony](https://t.me/simuncaibetollah):shipit:
+ ## Autoscript VPS created by [Telegram: Si Tony](https://t.me/simuncaibetollah):shipit:
  
-Operating software
-:computer:[Putty.exe](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+###### Operating software
+:computer:[Putty.exe for PC](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+
 :phone:[JuiceSSH for Android](https://play.google.com/store/apps/details?id=com.sonelli.juicessh&hl=en)
 
 # Centos 6.8 64-bit Webmin
