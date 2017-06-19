@@ -255,7 +255,7 @@ iptables -A OUTPUT -p tcp --dport 25 -j REJECT
 iptables-save
 
 # set time GMT +8
-ln -fs /usr/share/zoneinfo/Asia/Kuala_Lumpur /etc/localtime
+ln -fs /usr/share/zoneinfo/Asia/Malaysia /etc/localtime
 
 # Restart Service
 chown -R nginx:nginx /home/vps/public_html
