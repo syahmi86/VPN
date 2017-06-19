@@ -1,4 +1,4 @@
- Autoscript VPS created by Tony Simuncai (copy paste orang punya)
+ Autoscript VPS created by [Telegram Si Tony](https://t.me/simuncaibetollah)
 
 # Centos 6.8 64-bit Webmin
 ```
