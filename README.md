@@ -1,10 +1,10 @@
- Autoscript VPS created by [Telegram Si Tony](https://t.me/simuncaibetollah)
+ Autoscript VPS created by [Telegram: Si Tony](https://t.me/simuncaibetollah)
 
 # Centos 6.8 64-bit Webmin
 ```
  wget https://raw.githubusercontent.com/syahz86/VPN/master/Centos-kvm.sh
 ```
- kemudian paste nie dan tunggu sehingga selesai
+ - kemudian paste nie dan tunggu sehingga selesai
 ```
  bash Centos-kvm.sh
 ```
