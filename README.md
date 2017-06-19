@@ -80,5 +80,6 @@ chmod +x /usr/bin/usernew
  wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/autoexpire.sh && chmod +x autoexpire.sh
  
  *untuk menggunakannya taip: sh autoexpire.sh
+ 
  *untuk melihat user yang sudah expired taip : cat expireduser.txt
  
