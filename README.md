@@ -1,4 +1,8 @@
  ###### Autoscript VPS created by [Telegram: Si Tony](https://t.me/simuncaibetollah):shipit:
+ 
+Operating software
+:computer:[Putty.exe](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+:phone:[JuiceSSH for Android](https://play.google.com/store/apps/details?id=com.sonelli.juicessh&hl=en)
 
 # Centos 6.8 64-bit Webmin
 ```
@@ -72,7 +76,7 @@
  bash CustomDebian-kvm.sh
 ```
 
-# Add Usernew Centos
+# EasyAdd Usernew Centos
 ```
 wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/create-user.sh
 cp /root/create-user.sh /usr/bin/usernew
