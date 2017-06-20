@@ -2,14 +2,14 @@
 #Support us at GollumVPN
 
 echo -e "Create new user ID"
-read -p "Username : " Login
-read -p "Password : " Pass
-read -p "Expired (hari): " masaaktif
+read -p "Enter username: " uname
+read -p "Enter password: " pass
+read -p "Enter expiry date (YYYY-MM-DD): " expdate
 
-IP=`dig +short myip.opendns.com @resolver1.opendns.com`
-useradd -e `date -d "$masaaktif days" +"%Y-%m-%d"` -s /bin/false -M $Login
-exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
-echo -e "$Pass\n$Pass\n"|passwd $Login &> /dev/null
+useradd -M $uname
+echo "$uname:$pass" | chpasswd
+usermod -e $expdate $uname
+
 echo -e ""
 echo -e "Informasi SSH"
 echo -e "=========-account-=========="
