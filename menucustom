@@ -1,6 +1,14 @@
+#!/bin/bash
+
+# go to root
+cd
+
+# update
+yum -y update
+
 # download script
 cd /usr/bin
-wget https://raw.githubusercontent.com/syahz86/Centos/master/user-list 
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-list && chmod +x user-list
 wget https://raw.githubusercontent.com/syahz86/Centos/master/user-expire-list && chmod +x user-expire-list
 
 # install custom menu
