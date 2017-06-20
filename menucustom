@@ -6,31 +6,19 @@ cd
 # update
 yum -y update
 
+# install monitor dropbear login
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlogin.sh
+chmod +x userlogin.sh
+
 # download script
 cd /usr/bin
-wget https://raw.githubusercontent.com/syahz86/Centos/master/user-list && chmod +x user-list
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-add && chmod +x user-add
 wget https://raw.githubusercontent.com/syahz86/Centos/master/user-expire-list && chmod +x user-expire-list
-wget https://raw.githubusercontent.com/syahz86/Centos/master/re-drop && chmod +x re-drop
-
-# install custom menu
-cd /usr/bin
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-active-list && chmod +x user-active-list
 wget https://raw.githubusercontent.com/syahz86/VPN/master/menu && chmod +x menu
 
 # info
 clear
-echo "Setup by GollumVPN"
-echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.tar)"
-echo "OpenSSH  : 22, 143"
-echo "Dropbear : 109, 110, 443"
-echo "Squid3   : 8080 (limit to IP SSH)"
-echo "badvpn   : badvpn-udpgw port 7300"
-echo "Webmin   : http://$MYIP:10000/"
-echo "vnstat   : http://$MYIP:81/vnstat/"
-echo "Timezone : Asia/Malaysia"
-echo "Fail2Ban : [on]"
-echo "IPv6     : [off]"
-echo "Torrent Block :[on]" 
-echo "Playstation Block :[on]" 
-echo "Please type menu for options"
+echo -e "Please type \e[1;33;44mmenu\e[0m for options"
 
 echo "==============================================="
