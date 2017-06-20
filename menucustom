@@ -16,6 +16,7 @@ wget https://raw.githubusercontent.com/syahz86/Centos/master/user-add && chmod +
 wget https://raw.githubusercontent.com/syahz86/Centos/master/user-expire-list && chmod +x user-expire-list
 wget https://raw.githubusercontent.com/syahz86/Centos/master/user-active-list && chmod +x user-active-list
 wget https://raw.githubusercontent.com/syahz86/VPN/master/menu && chmod +x menu
+wget https://raw.githubusercontent.com/syahz86/Centos/master/test-speed && chmod +x test-speed
 
 # info
 clear
