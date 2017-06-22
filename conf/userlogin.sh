@@ -42,7 +42,7 @@ echo " $waktu| $PID | $user| $fromip "
 fi
 done
 echo "---------------------------------------------------------------"
-echo " Scrypt by SufaNet.com "
+echo " Scrypt by GollumVPN "
 else
 echo " Gunakan perintah : sh userlogin.sh [port]"
 echo " contoh : sh sh userlogin.sh 443"
