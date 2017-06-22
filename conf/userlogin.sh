@@ -7,7 +7,7 @@ echo ' '
 echo ' '
 echo " Dropbear Users Login Monitor "
 echo "---------------------------------------------------------------"
-echo " Tanggal/Jam    | PID  | Username | Dari Host "
+echo " Tarikh/Jam    | PID  | Username | Dari Host "
 echo "---------------------------------------------------------------"
 pids=`ps ax |grep dropbear |grep " $port_dropbear" |awk -F" " '{print $1}'`
 for pid in $pids
