@@ -42,11 +42,11 @@ do
     fi
 done
 echo "---------------------------------------------------------------" 
-echo "                        Script Modified by GollumVPN   " 
+echo "                        Script Modified by SYAHZ86   " 
 else
-echo "Gunakan perintah sh userlogin.sh [port]"
-echo "contoh : sh userlogin.sh 443"
-echo ' '
-echo ' '
+echo "  Gunakan perintah sh userlogin.sh [port]"
+echo "  contoh : sh userlogin.sh 443"
+echo \n
+echo \n
 fi
 exit 0
