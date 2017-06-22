@@ -7,7 +7,7 @@ echo ' '
 echo ' '
 echo " Dropbear Users Login Monitor "
 echo "---------------------------------------------------------------"
-echo " Tarikh/Jam    | PID  | Username | Dari Host "
+echo " Tanggal/Jam    | PID  | Username | Dari Host "
 echo "---------------------------------------------------------------"
 pids=`ps ax |grep dropbear |grep " $port_dropbear" |awk -F" " '{print $1}'`
 for pid in $pids
@@ -42,7 +42,7 @@ echo " $waktu| $PID | $user| $fromip "
 fi
 done
 echo "---------------------------------------------------------------"
-echo " Script by GollumVPN "
+echo " Scrypt by SufaNet.com "
 else
 echo " Gunakan perintah : sh userlogin.sh [port]"
 echo " contoh : sh sh userlogin.sh 443"
