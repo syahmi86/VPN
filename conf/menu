@@ -58,7 +58,7 @@ function used_data(){
 
 clear
 PS3='Please enter your choice: '
-options=("Add User" "Renew User" "Delete User" "Current Connected Users" "User List" "Ram Status" "Users Not Expired" "Expired Users" "Used Data By Users" "Quit")
+options=("Add User" "Renew User" "Delete User" "Current Connected Users" "User List" "Ram Status" "Users Not Expired" "Expired Users" "Monitor Multilogin User" "Used Data By Users" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -101,13 +101,17 @@ do
 			expired_users
 			break
 			;;
+                "Monitor Multilogin User")
+			monssh
+			break
+			;;
 		"Used Data By Users")
 			used_data
 			break
 			;;
-        "Quit")
-            break
-            ;;
+                "Quit")
+                        break
+                        ;;
         *) echo invalid option;;
     esac
 done
