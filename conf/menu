@@ -102,7 +102,7 @@ do
 			break
 			;;
                 "Monitor Multilogin User")
-			monssh
+			dropmon
 			break
 			;;
 		"Used Data By Users")
