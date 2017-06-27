@@ -46,13 +46,13 @@ done
 
 echo "-------------------------------------------------------------"
 echo -e "==============[ User Monitor Dropbear & OpenSSH]=============" 
-PS3='Silahkan ketik nomor 1-3 lalu ENTER: '
+PS3='Sila pilih nombor 1-3 kemudian tekan ENTER: '
 options=("Tendang User" "Kembali Ke MENU" "Keluar")
 select opt in "${options[@]}"
 do
     case $opt in
         "Tendang User")
-	read -p "Masukan angka (PID) user yang mau di tendang: " tendangan
+	read -p "Masukan angka (PID) user yang ingin di tendang: " tendangan
 	kill -9 $tendangan
 	echo "Tunggu..." 
 	sleep 3
@@ -60,7 +60,6 @@ do
 	break
 	;;
 	"Kembali Ke MENU")
-	cd /root
 	menu
 	break
 	;;
