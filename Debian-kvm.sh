@@ -167,8 +167,11 @@ bash Autokick-debian.sh
 
 # Install Monitor Multilogin Dropbear
 cd
-wget -O dropmon "https://raw.github.com/syahz86/VPN/master/dropmon"
-chmod +x dropmon
+wget -O /usr/bin/dropmon https://raw.githubusercontent.com/syahz86/VPN/master/conf/dropmon.sh
+#cd
+cd
+chmod +x /usr/bin/dropmon
+#cd
 
 # Install Menu for OpenVPN
 cd
