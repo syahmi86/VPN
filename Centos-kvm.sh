@@ -14,7 +14,7 @@ MYIP2="s/xxxxxxxxx/$MYIP/g";
 cd
 
 # set time GMT +8
-ln -fs /usr/share/zoneinfo/Asia/Malaysia /etc/localtime
+ln -fs /usr/share/zoneinfo/Asia/Kuala_Lumpur /etc/localtime
 
 #DISABLE SELINUX START
 echo -n "Disable selinux..."
@@ -63,8 +63,8 @@ yum -y update
 
 # install webserver
 yum -y install nginx php-fpm php-cli
-service nginx restart
-service php-fpm restart
+service nginx start
+service php-fpm start
 chkconfig nginx on
 chkconfig php-fpm on
 
@@ -95,13 +95,13 @@ echo "screenfetch" >> .bash_profile
 
 # install webserver
 cd
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/syahz86/VPN/master/conf/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/syahz86/VPS/master/conf/nginx.conf"
 sed -i 's/www-data/nginx/g' /etc/nginx/nginx.conf
 mkdir -p /home/vps/public_html
-echo "<pre>Setup by Syahmi</pre>" > /home/vps/public_html/index.html
+echo "<pre>Setup by Syahz86</pre>" > /home/vps/public_html/index.html
 echo "<?php phpinfo(); ?>" > /home/vps/public_html/info.php
 rm /etc/nginx/conf.d/*
-wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/syahz86/VPN/master/conf/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/syahz86/VPS/master/conf/vps.conf"
 sed -i 's/apache/nginx/g' /etc/php-fpm.d/www.conf
 chmod -R +rx /home/vps
 service php-fpm restart
@@ -131,15 +131,13 @@ cd
 
 # configure openvpn client config
 cd /etc/openvpn/
-wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/syahz86/VPS/master/conf/openvpn.conf"
-sed -i $MYIP2 /etc/openvpn/client.ovpn;
-useradd -g 0 -d /root/ -s /bin/bash $dname
-echo $dname:"test1" | chpasswd
-echo $dname > pass.txt
-echo "test1" >> pass.txt
-tar cf client.tar client.ovpn pass.txt
+wget -O /etc/openvpn/80-client.ovpn "https://raw.githubusercontent.com/syahz86/VPS/master/conf/80-client.conf"
+sed -i $MYIP2 /etc/openvpn/80-client.ovpn;
+PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
+tar cf client.tar 80-client.ovpn
 cp client.tar /home/vps/public_html/
 cp client.ovpn /home/vps/public_html/
+cd
 
 # setting port ssh
 sed -i '/Port 22/a Port 143' /etc/ssh/sshd_config
@@ -149,10 +147,17 @@ chkconfig sshd on
 
 # install dropbear
 yum -y install dropbear
-echo "OPTIONS=\"-p 109 -p 110 -p 443\"" > /etc/sysconfig/dropbear
+echo "OPTIONS=\"-b /root/banner.txt -p 109 -p 110 -p 443\"" > /etc/sysconfig/dropbear
 echo "/bin/false" >> /etc/shells
 service dropbear restart
 chkconfig dropbear on
+
+# install banner
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/banner.txt
+mv ./banner.txt /banner.txt
+chmod 0644 /banner.txt
+service dropbear restart
+service ssh restart
 
 # install vnstat gui
 cd /home/vps/public_html/
@@ -175,7 +180,7 @@ chkconfig fail2ban on
 
 # install squid
 yum -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/syahz86/VPN/master/conf/squid.conf"
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/syahz86/VPS/master/conf/squid.conf"
 sed -i $MYIP2 /etc/squid/squid.conf;
 service squid restart
 chkconfig squid on
@@ -190,48 +195,40 @@ sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
 service webmin restart
 chkconfig webmin on
 
-# User Status
+# install crontab service
+yum install vixie-cron -y
+
+# Install SSH autokick
 cd
-wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/status
-chmod +x status
+wget https://raw.githubusercontent.com/syahz86/VPS/master/Autokick-centos.sh
+bash Autokick-centos.sh
+
+# User Status
+cd /usr/bin
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/customstatus
+cp /root/customstatus /usr/bin/customstatus
+chmod +x customstatus
 
 # Install Dos Deflate
-apt-get -y install dnsutils dsniff
+apt-get install dnsutils dsniff -y
 wget https://github.com/jgmdev/ddos-deflate/archive/master.zip
 unzip master.zip
 cd ddos-deflate-master
 ./install.sh
 cd
 
-# Install SSH autokick
-cd
-wget https://raw.githubusercontent.com/syahz86/VPN/master/Autokick-centos.sh
-bash Autokick-centos.sh
-
-# install monitor login user dropbear
-cd
-wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlogin.sh
-chmod +x userlogin.sh
-
-# EasyAdd Usernew Centos
-cd
-wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/create-user.sh
-cp /root/create-user.sh /usr/bin/usernew
-chmod +x /usr/bin/usernew
-
-# User Expired Centos
+# install custom menu
 cd /usr/bin
-wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/autoexpire.sh
-chmod +x autoexpire.sh
-sh autoexpire.sh
-
-# Download Script Menu
-cd /usr/bin
-wget https://raw.githubusercontent.com/syahz86/Centos/master/user-limit && chmod +x user-limit
-wget https://raw.githubusercontent.com/syahz86/VPN/master/menu && chmod +x menu
-wget https://raw.githubusercontent.com/syahz86/Centos/master/user-del && chmod +x user-del
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-add && chmod +x user-add
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-expire-list && chmod +x user-expire-list
 wget https://raw.githubusercontent.com/syahz86/Centos/master/user-list && chmod +x user-list
-wget https://raw.githubusercontent.com/syahz86/Centos/master/re-drop && chmod +x re-drop
+wget https://raw.githubusercontent.com/syahz86/VPN/master/menu && chmod +x menu
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/userlogin.sh && chmod +x userlogin.sh
+wget https://raw.githubusercontent.com/syahz86/Centos/master/test-speed && chmod +x test-speed
+wget https://raw.githubusercontent.com/syahz86/Centos/master/disable-user-expire && chmod +x disable-user-expire
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-del && chmod +x user-del
+wget https://raw.githubusercontent.com/syahz86/Centos/master/user-renew && chmod +x user-renew
+cd
 
 #bonus block playstation
 iptables -A OUTPUT -d account.sonyentertainmentnetwork.com -j DROP
@@ -300,8 +297,12 @@ iptables -A FORWARD -p tcp --dport 25 -j REJECT
 iptables -A OUTPUT -p tcp --dport 25 -j REJECT 
 iptables-save
 
-# set time GMT +8
-ln -fs /usr/share/zoneinfo/Asia/Malaysia /etc/localtime
+# install speedtest server
+cd
+wget https://raw.githubusercontent.com/syahz86/VPN/master/conf/speedtest_cli.py
+chmod a+rx speedtest_cli.py
+sudo mv speedtest_cli.py /usr/local/bin/speedtest-cli
+sudo chown root:root /usr/local/bin/speedtest-cli
 
 # Restart Service
 chown -R nginx:nginx /home/vps/public_html
@@ -328,12 +329,10 @@ echo "badvpn   : badvpn-udpgw port 7300"
 echo "Webmin   : http://$MYIP:10000/"
 echo "vnstat   : http://$MYIP:81/vnstat/"
 echo "Timezone : Asia/Malaysia"
-echo "Fail2Ban : [on]"
-echo "IPv6     : [off]"
-echo "Torrent Block :[on]" 
-echo "Playstation Block :[on]" 
-echo "Please type sh userlogin.sh port to check login user"
-echo "Please type usernew for new user"
-echo "Please type cat expireduser.txt for expired list"
+echo -e "Fail2Ban : [\e[92mon\e[0m]"
+echo -e "IPv6     : [\e[91moff\e[0m]"
+echo -e "Torrent Block : [\e[92mon\e[0m]" 
+echo -e "Playstation Block : [\e[92mon\e[0m]"
+echo -e "Please type \e[1;33;44mmenu\e[0m for options"
 
-echo "==============================================="
+echo "================================================"
