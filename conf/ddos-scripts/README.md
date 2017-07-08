@@ -5,12 +5,9 @@
 
 :phone:[JuiceSSH for Android](https://play.google.com/store/apps/details?id=com.sonelli.juicessh&hl=en)
 
-ddos-scripts
-============
-
 ###### Collection of scripts used in DDOS activity for use by researchers
 
-# Centos Menu
+# DDOS-Scripts
 ```
 # Download Script
 cd /usr/bin
