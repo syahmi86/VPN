@@ -1,6 +1,0 @@
-#
-#!/bin/sh
-#Restore IPTables Change
-#Doctype | Malaysian Phreaker Knowledge
-#
-iptables-restore < /etc/newiptables.conf
