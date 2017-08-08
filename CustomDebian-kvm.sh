@@ -142,7 +142,7 @@ mv /usr/bin/user-login.x /usr/bin/user-login
 # Restart Service
 chown -R www-data:www-data /home/vps/public_html
 service nginx start
-service php-fpm start
+service php5-fpm start
 service vnstat restart
 service openvpn restart
 service ssh restart
