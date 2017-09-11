@@ -13,4 +13,3 @@ COMMIT
 :POSTROUTING ACCEPT [0:0]
 -A POSTROUTING -o eth0 -j SNAT --to-source xxxxxxxxx
 COMMIT
-
